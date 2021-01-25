@@ -14,12 +14,17 @@
          <div id="nav-bar">
             <ul id="nav-bar-list">
                <li class="nav-bar-li logo">Character Select</li>
-               <li class="nav-bar-li right">Create a Character</li>
-               <li class="nav-bar-li right">Create an Item</li>
+               <li id="create-character" class="nav-bar-li right">Create a Character</li>
+               <li id="create-item" class="nav-bar-li right">Create an Item</li>
             </ul>
             <form id="login-form">
                <input type="text" name="name" placeholder="Your name" value="">
                <input type="submit" value="Login">
+            </form>
+            <form id="character-form">
+               <input type="text" name="name" placeholder="Name" value=""> <br>
+               <input type="text" name="image" placeholder="Image URL" value=""> <br>
+               <input type="submit" value="Create">
             </form>
          </div>
          <div id="character-display">
