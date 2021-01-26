@@ -1,21 +1,23 @@
-// variables
+// VARIABLES
 const characterDiv = document.querySelector('#character-container')
 const login = document.querySelector('#login-form')
 const navBar = document.querySelector('#nav-bar')
 const characterDisplay = document.querySelector('#character-display')
 const charLi = document.querySelector('#create-character')
+const itemLi = document.querySelector('#create-item')
 const charForm = document.querySelector('#character-form')
+const itemForm = document.querySelector('#item-form')
+const availItems = document.querySelector('#available-items')
 let charId 
 let allUsers
 let loginName
 let currentUser
 
-// fetch
+// FETCH REQUESTS
 function getUsers(){
     fetch(`http://localhost:3000/users`)
     .then(res => res.json())
     .then(data => {
-        // data.forEach(checkUser)
         allUsers = data
     })
 }
@@ -44,15 +46,23 @@ function getCharacter(id){
     })
 }
 
+function getAllItems() {
+    fetch("http://localhost:3000/items")
+    .then(res => res.json())
+    .then(allItems => {
+        renderItems(allItems)
+    })
+}
 
-
-// event listeners
+// EVENT LISTENERS
 login.addEventListener('submit', handleLogin)
 characterDiv.addEventListener('click', handleCharacterSelect)
 charLi.addEventListener('click', displayCharForm)
 charForm.addEventListener('submit', createCharacter)
+itemLi.addEventListener('click', displayItemForm)
+itemForm.addEventListener('submit', createItem)
 
-//Event Handlers 
+// EVENT HANDLERS 
 function handleLogin(event){
     event.preventDefault()
     loginName = event.target.name.value
@@ -68,10 +78,18 @@ function handleCharacterSelect(event){
 }
 
 function displayCharForm(event) {
-    if(charForm.style.display === 'none') {
+    if(charForm.style.display === "none") {
         charForm.style.display = "block"
     } else {
         charForm.style.display = "none"
+    }
+}
+
+function displayItemForm(event) {
+    if(itemForm.style.display === "none") {
+        itemForm.style.display = "block"
+    } else {
+        itemForm.style.display = "none"
     }
 }
 
@@ -85,7 +103,6 @@ function createCharacter(event){
         ap: 50,
         dp: 50
     }
-    console.log(data)
 
     fetch("http://localhost:3000/characters", {
         method: 'POST',
@@ -101,8 +118,31 @@ function createCharacter(event){
     charForm.style.display = "none"
 }
 
+function createItem(event) {
+    event.preventDefault()
+    data = {
+        name: event.target.name.value,
+        description: event.target.description.value,
+        points: 5
+    }
 
-//helper functions
+    fetch("http://localhost:3000/items", {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
+    })
+    .then(res => res.json())
+    .then(item => {
+        availItems.innerHTML += 
+            `<p class="padding" data-id="${item.id}">${item.name}</p>`
+        // console.log(item)
+    })
+
+    event.target.reset()
+    itemForm.style.display = "none"
+}
+
+// HELPER FUNCTIONS
 function checkUser(allUsers){
     size = allUsers.length
 
@@ -118,7 +158,7 @@ function checkUser(allUsers){
     }
 }
 
-//Render function 
+// RENDER FUNCTIONS
 function renderUserName(user){
     let namePTag = document.createElement('p')
     namePTag.innerText = `User: ${user.name}`
@@ -126,16 +166,16 @@ function renderUserName(user){
     currentUser = user
     login.style.display = "none";
     getCharacters()
+    getAllItems()
 }
 
 function renderCharacters(allChars) {
     allChars.forEach(char => {
         if (currentUser.id === char.user_id) {
-            characterDiv.innerHTML += `<p data-id="${char.id}">${char.name}</p>`
+            characterDiv.innerHTML += `<p class='padding' data-id="${char.id}">${char.name}</p>`
         }
     })
 }
-
 
 function renderCharacter(char) {
     console.log(characterDisplay)
@@ -159,5 +199,14 @@ function renderCharacter(char) {
 
 }
 
-//calling Fetch 
+function renderItems(allItems) {
+    // console.log(allItems)
+    allItems.forEach(item => {
+        availItems.innerHTML += 
+            `<p class='padding' data-id="${item.id}">${item.name}</p>`
+    })
+}
+
+// CALLING FETCH REQUESTS
 getUsers()
+

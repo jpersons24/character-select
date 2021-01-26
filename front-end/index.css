@@ -157,3 +157,13 @@ body {
    float: right;
    padding-right: 20px;
  }
+
+ #item-form {
+    display: none;
+    float: right;
+    padding-right: 20px;
+ }
+
+ .padding {
+    padding-left: 10px;
+ }
