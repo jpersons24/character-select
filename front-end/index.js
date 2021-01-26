@@ -8,12 +8,38 @@ const itemLi = document.querySelector('#create-item')
 const charForm = document.querySelector('#character-form')
 const itemForm = document.querySelector('#item-form')
 const availItems = document.querySelector('#available-items')
+const inventoryList = document.querySelector('#inventory-list')
+let itemId
 let charId 
 let allUsers
 let loginName
 let currentUser
+let currentItem
+let currentChar
 
 // FETCH REQUESTS
+function addItemToInventory(data){
+    fetch(`http://localhost:3000/inventories`, {
+        method: 'POST',
+        headers: {'Content-type': 'application/json'},
+        body: JSON.stringify(data)
+    })
+}
+
+
+function deleteItem(itemId){
+    fetch(`http://localhost:3000/items/${itemId}`,{
+        method: 'DELETE'
+    })
+}
+
+function deleteCharacter(characterId){
+    console.log(characterId)
+    fetch(`http://localhost:3000/characters/${characterId}`,{
+        method: 'DELETE'
+    })
+}
+
 function getUsers(){
     fetch(`http://localhost:3000/users`)
     .then(res => res.json())
@@ -54,6 +80,14 @@ function getAllItems() {
     })
 }
 
+function getItem(itemId) {
+    fetch(`http://localhost:3000/items/${itemId}`)
+    .then(res => res.json())
+    .then(item => {
+        renderItem(item)
+    })
+}
+
 // EVENT LISTENERS
 login.addEventListener('submit', handleLogin)
 characterDiv.addEventListener('click', handleCharacterSelect)
@@ -61,6 +95,7 @@ charLi.addEventListener('click', displayCharForm)
 charForm.addEventListener('submit', createCharacter)
 itemLi.addEventListener('click', displayItemForm)
 itemForm.addEventListener('submit', createItem)
+availItems.addEventListener('click', handleItemSelect)
 
 // EVENT HANDLERS 
 function handleLogin(event){
@@ -70,11 +105,21 @@ function handleLogin(event){
     event.target.reset()
 }
 
+
 function handleCharacterSelect(event){
     if (event.target.matches('p')) {
         charId = event.target.dataset.id 
         getCharacter(charId)
+        // renderCharItems()
     }  
+}
+
+function handleItemSelect(event){
+    if (event.target.matches('p')) {
+        itemId = event.target.dataset.id
+        currentItem = event.target.textContent
+        getItem(itemId)
+    }
 }
 
 function displayCharForm(event) {
@@ -135,11 +180,32 @@ function createItem(event) {
     .then(item => {
         availItems.innerHTML += 
             `<p class="padding" data-id="${item.id}">${item.name}</p>`
-        // console.log(item)
     })
-
     event.target.reset()
     itemForm.style.display = "none"
+}
+
+function addItemHandler(event){
+    data = {
+        item_id: itemId,
+        character_id: charId
+    }
+    addItemToInventory(data)
+    renderNewItem(data)
+}
+
+function handleCharDelete(event) {
+    const selectChar = document.querySelector(`#character-container p[data-id="${charId}`)
+    selectChar.remove()
+    characterDisplay.innerHTML = '<h3>Character Name</h3>'
+    deleteCharacter(charId)
+}
+
+function handleItemDelete(event) {
+    const selectItem = document.querySelector(`#available-items p[data-id="${itemId}`)
+    selectItem.remove()
+    characterDisplay.innerHTML = '<h3>Character Name</h3>'
+    deleteItem(itemId)
 }
 
 // HELPER FUNCTIONS
@@ -178,8 +244,6 @@ function renderCharacters(allChars) {
 }
 
 function renderCharacter(char) {
-    console.log(characterDisplay)
-    console.log(char)
     characterDisplay.innerHTML = 
         `
         <h3>${char.name}</h3>
@@ -192,18 +256,61 @@ function renderCharacter(char) {
                     <p>Health: ${char.hp}</p>
                     <p>Attack: ${char.ap}</p>
                     <p>Defense: ${char.dp}</p>
+                    <button class="delete-char" data-id=${char.id}>Delete</button>
                 </div>
             </div>
         </div>    
         `
-
+        const delBtn = document.querySelector('.delete-char')
+        delBtn.addEventListener('click', handleCharDelete)
+        renderCharItems(char.items)      
 }
 
 function renderItems(allItems) {
-    // console.log(allItems)
     allItems.forEach(item => {
         availItems.innerHTML += 
             `<p class='padding' data-id="${item.id}">${item.name}</p>`
+    })
+}
+
+function renderItem(item) {
+    characterDisplay.innerHTML =
+        `
+        <h3>${item.name}</h3>
+        <div class="flip-card">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <p>Description:</p> <br>
+                    <p>${item.description}</p>
+                </div>
+                <div class="flip-card-back">
+                    <p>Attribute Points: ${item.points}</p>
+                    <button class="add-item" data-id="${item.id}">Add</button>
+                    <button class="delete-item" data-id=${item.id}>Delete</button>
+                </div>
+            </div>
+        </div>    
+        `
+        const addButton = document.querySelector('.add-item')
+        addButton.addEventListener('click', addItemHandler)
+        const delBtn = document.querySelector('.delete-item')
+        delBtn.addEventListener('click', handleItemDelete)
+}
+
+function renderNewItem(data){
+    const item = document.createElement('li')
+    item.textContent = currentItem.name
+    item.dataset.id = itemId
+    inventoryList.appendChild(item) 
+}
+
+
+
+
+function renderCharItems(items) {
+    items.forEach(item => {
+        inventoryList.innerHTML += 
+            `<li data-id="${item.id}">${item.name}<button id="remove-inventory-item">X</button></li>`
     })
 }
 
