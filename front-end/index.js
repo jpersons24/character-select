@@ -100,6 +100,8 @@ function createCharacter(event){
     event.target.reset()
     charForm.style.display = "none"
 }
+
+
 //helper functions
 function checkUser(allUsers){
     size = allUsers.length
