@@ -120,6 +120,7 @@ charItems.addEventListener('click', handleCharItemClick)
 // EVENT HANDLERS 
 function handleLogin(event){
     event.preventDefault()
+    displayAll()
     loginName = event.target.name.value
     checkUser(allUsers)
     event.target.reset()
@@ -240,7 +241,20 @@ function handleCharItemClick(event) {
     }
 }
 
+
+
 // HELPER FUNCTIONS
+
+
+function displayAll() {
+    characterDiv.style.display = 'inline'
+    charLi.style.display = 'inline-block'
+    itemLi.style.display = 'inline-block'
+    charItems.style.display = 'inline'
+    availItems.style.display = 'inline'
+}
+
+
 function checkUser(allUsers){
     size = allUsers.length
 
@@ -292,7 +306,7 @@ function renderCharacter(char) {
         <div class="flip-card">
             <div class="flip-card-inner">
                 <div class="flip-card-front">
-                    <img src="${char.image_url}" alt="${char.name}" style="width:350px;height:290px;">
+                    <img class="flip-card-image" src="${char.image_url}" alt="${char.name}" style="width:350px;height:290px;">
                 </div>
                 <div class="flip-card-back">
                     <p>Health: ${char.hp}</p>
@@ -342,7 +356,7 @@ function renderItem(item) {
 
 function renderNewItem(data){
     const item = document.createElement('li')
-    item.innerHTML = currentItem + '<button id="remove-inventory-item">X</button>'
+    item.innerHTML = currentItem + '<button class="close" id="remove-inventory-item">X</button>'
     item.dataset.item = itemId
     item.dataset.char = charId
     inventoryList.appendChild(item) 
@@ -352,7 +366,7 @@ function renderCharItems(items) {
     inventoryList.innerHTML = ``
     items.forEach(item => {
         inventoryList.innerHTML += 
-            `<li data-id="${item.id}">${item.name}<button id="remove-inventory-item">X</button></li>`
+            `<li class="inventory-items" data-id="${item.id}">${item.name}<button class='close' id="remove-inventory-item">X</button></li>`
     })
 }
 

@@ -1,7 +1,8 @@
 body {
    /* background-color: #adceba; */
-   background: linear-gradient(225deg, #adceba, #0b470e);
+   background: radial-gradient(circle, #f5f119e0 7%, #f8c22f 10%, #d1511e 40%);
    font-family: 'Cinzel', serif;
+   color: white;
 }
 
 #nav-bar-list {
@@ -16,6 +17,7 @@ body {
 
 .right {
    float: right;
+   display: none;
    font-size: 15px;
    padding-right: 15px;
 }
@@ -46,32 +48,39 @@ body {
    
 #nav-bar { 
    grid-area: 1 / 1 / 2 / 6; 
-   border: ridge #48805e;
    border-radius: 20px;
 }
 
 #character-display { 
    grid-area: 2 / 2 / 5 / 5; 
-   border: ridge #48805e;
    border-radius: 20px;
 }
 
 #character-container { 
    grid-area: 2 / 1 / 6 / 2; 
-   border: ridge #48805e;
+   border: ridge #ffffff;
    border-radius: 20px;
+   background: linear-gradient(290deg, #1b44fc, #8b10bb);
+   display: none;
+   Overflow: auto;
 }
 
 #current-items {
    grid-area: 5 / 2 / 6 / 5; 
-   border: ridge #48805e;
+   border: ridge #ffffff;
    border-radius: 20px;
+   display: none;
+   Overflow: auto;
+   background: linear-gradient(215deg, #13bd92, #1b44fc);
 }
 
 #available-items { 
    grid-area: 2 / 5 / 6 / 6; 
-   border: ridge #48805e;
+   border: ridge #ffffff;
    border-radius: 20px;
+   background: linear-gradient(215deg, #00db0baf, #13bd92);
+   display: none;
+   Overflow: auto;
 }
 
 #character-container h3 {
@@ -92,25 +101,14 @@ body {
    text-align: center;
 }
 
-/* .container {
-   height: 288px; 
-   width: 405px;
-   padding: 10px 20px;
-   margin: auto;
-}
-
-.size {
-   height: 270px; 
-   width: 390px;
-   margin: auto;
-} */
-
 /* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
 .flip-card {
    background-color: transparent;
    margin: auto;
    width: 350px;
+   /* width: 500px; */
    height: 290px;
+   /* height: 350px; */
    border: 1px solid #f1f1f1;
    perspective: 1000px; /* Remove this if you don't want the 3D effect */
  }
@@ -144,10 +142,14 @@ body {
    background-color: #3d5a3f;
    color: white;
  }
+
+ /* .flip-card-front img {
+   object-fit: contain;
+ } */
  
  /* Style the back side */
  .flip-card-back {
-   background-color: #3d5a3f;
+   background-color: #2191ece7;
    color: white;
    transform: rotateY(180deg);
  }
@@ -166,4 +168,42 @@ body {
 
  .padding {
     padding-left: 10px;
+ }
+
+ .close {
+   right: 32px;
+   top: 32px;
+   width: 32px;
+   height: 32px;
+   opacity: 0.1;
+   border: none;
+ }
+
+ .close:hover {
+   opacity: 1;
+ }
+
+ .close:before, .close:after {
+   left: 15px;
+   height: 33px;
+   width: 2px;
+   background-color: #3d5a3f;
+   border: 0px dashed rgba(0, 0, 0, 0);
+ }
+
+ .close:before {
+   transform: rotate(45deg);
+ }
+
+ .close:after {
+   transform: rotate(-45deg);
+ }
+
+ #inventory-list {
+   list-style: none;
+ }
+ 
+ .inventory-items{
+   display: inline-block;
+   padding: 10px;
  }
