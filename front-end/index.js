@@ -9,6 +9,7 @@ const charForm = document.querySelector('#character-form')
 const itemForm = document.querySelector('#item-form')
 const availItems = document.querySelector('#available-items')
 const inventoryList = document.querySelector('#inventory-list')
+const charItems = document.querySelector('#current-items')
 let itemId
 let charId 
 let allUsers
@@ -16,8 +17,23 @@ let loginName
 let currentUser
 let currentItem
 let currentChar
+let inventoryId
 
 // FETCH REQUESTS
+function deleteItemFromInven(id){
+    fetch(`http://localhost:3000/inventories/${id}`,{
+        method: 'DELETE'
+    })
+}
+
+function inventories(){
+    fetch('http://localhost:3000/inventories')
+    .then(res => res.json())
+    .then(data => {
+        relationship(data)
+    })
+}
+
 function addItemToInventory(data){
     fetch(`http://localhost:3000/inventories`, {
         method: 'POST',
@@ -25,7 +41,6 @@ function addItemToInventory(data){
         body: JSON.stringify(data)
     })
 }
-
 
 function deleteItem(itemId){
     fetch(`http://localhost:3000/items/${itemId}`,{
@@ -53,6 +68,10 @@ function createUser(data){
     method: 'POST',
     headers: {'Content-type': 'application/json'},
     body: JSON.stringify(data)
+    })
+    .then(res => res.json())
+    .then(user => {
+        renderUserName(user)
     })
 }
 
@@ -96,6 +115,7 @@ charForm.addEventListener('submit', createCharacter)
 itemLi.addEventListener('click', displayItemForm)
 itemForm.addEventListener('submit', createItem)
 availItems.addEventListener('click', handleItemSelect)
+charItems.addEventListener('click', handleCharItemClick)
 
 // EVENT HANDLERS 
 function handleLogin(event){
@@ -168,7 +188,8 @@ function createItem(event) {
     data = {
         name: event.target.name.value,
         description: event.target.description.value,
-        points: 5
+        points: 5,
+        image_url: event.target.image.value 
     }
 
     fetch("http://localhost:3000/items", {
@@ -208,6 +229,17 @@ function handleItemDelete(event) {
     deleteItem(itemId)
 }
 
+
+
+function handleCharItemClick(event) {
+    if (event.target.matches('button')) {
+        itemId = event.target.closest('li').dataset.id
+        item = event.target.closest('li')
+        item.remove()
+        inventories()
+    }
+}
+
 // HELPER FUNCTIONS
 function checkUser(allUsers){
     size = allUsers.length
@@ -224,10 +256,20 @@ function checkUser(allUsers){
     }
 }
 
+function relationship(data){
+    data.forEach(obj => {
+        if(obj.character_id == charId && obj.item_id == itemId){
+            deleteItemFromInven(obj.id)
+        } 
+    })   
+}
+
+
 // RENDER FUNCTIONS
 function renderUserName(user){
     let namePTag = document.createElement('p')
     namePTag.innerText = `User: ${user.name}`
+    namePTag.className = "padding"
     navBar.append(namePTag)
     currentUser = user
     login.style.display = "none";
@@ -280,10 +322,11 @@ function renderItem(item) {
         <div class="flip-card">
             <div class="flip-card-inner">
                 <div class="flip-card-front">
-                    <p>Description:</p> <br>
-                    <p>${item.description}</p>
+                    <img src="${item.image_url}" alt="${item.name}" style="width:350px;height:290px;">
                 </div>
                 <div class="flip-card-back">
+                    <p>Description:</p> <br>
+                    <p>${item.description}</p>
                     <p>Attribute Points: ${item.points}</p>
                     <button class="add-item" data-id="${item.id}">Add</button>
                     <button class="delete-item" data-id=${item.id}>Delete</button>
@@ -299,15 +342,14 @@ function renderItem(item) {
 
 function renderNewItem(data){
     const item = document.createElement('li')
-    item.textContent = currentItem.name
-    item.dataset.id = itemId
+    item.innerHTML = currentItem + '<button id="remove-inventory-item">X</button>'
+    item.dataset.item = itemId
+    item.dataset.char = charId
     inventoryList.appendChild(item) 
 }
 
-
-
-
 function renderCharItems(items) {
+    inventoryList.innerHTML = ``
     items.forEach(item => {
         inventoryList.innerHTML += 
             `<li data-id="${item.id}">${item.name}<button id="remove-inventory-item">X</button></li>`
