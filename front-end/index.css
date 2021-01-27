@@ -1,5 +1,4 @@
 body {
-   /* background-color: #adceba; */
    background: radial-gradient(circle, #f5f119e0 7%, #f8c22f 10%, #d1511e 40%);
    font-family: 'Cinzel', serif;
    color: white;
@@ -105,10 +104,10 @@ body {
 .flip-card {
    background-color: transparent;
    margin: auto;
-   width: 350px;
-   /* width: 500px; */
-   height: 290px;
-   /* height: 350px; */
+   /* width: 350px; */
+   width: 450px;
+   /* height: 290px; */
+   height: 300px;
    border: 1px solid #f1f1f1;
    perspective: 1000px; /* Remove this if you don't want the 3D effect */
  }
@@ -139,13 +138,13 @@ body {
  
  /* Style the front side (fallback if image is missing) */
  .flip-card-front {
-   background-color: #3d5a3f;
+   background-color: #2191ece7;
    color: white;
  }
 
  /* .flip-card-front img {
    object-fit: contain;
- } */
+ }  */
  
  /* Style the back side */
  .flip-card-back {
