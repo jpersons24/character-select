@@ -336,7 +336,7 @@ function renderItem(item) {
         <div class="flip-card">
             <div class="flip-card-inner">
                 <div class="flip-card-front">
-                    <img src="${item.image_url}" alt="${item.name}" style="width:450px;height:300px;">
+                    <img src="${item.image_url}" alt="${item.name}" style="width:400px;height:300px;">
                 </div>
                 <div class="flip-card-back">
                     <p>Description:</p> <br>

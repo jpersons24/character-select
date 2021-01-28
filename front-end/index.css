@@ -1,5 +1,5 @@
 body {
-   background: radial-gradient(circle, #f5f119e0 7%, #f8c22f 10%, #d1511e 40%);
+   background: radial-gradient(circle, #f5f119e0 5%, #f8c22f 20%, #d1511e 70%);
    font-family: 'Cinzel', serif;
    color: white;
 }
@@ -24,6 +24,7 @@ body {
 .logo { 
    font-family: 'Cinzel', serif;
    font-size: 30px;
+   text-shadow: 4px 4px 4px rgb(226, 226, 226);
 }
 
 #login-form {
@@ -84,6 +85,7 @@ body {
 
 #character-container h3 {
    text-align: center;
+   text-shadow: 4px 4px 5px rgb(165, 165, 165);
 }
 
 #character-display h3 {
@@ -94,129 +96,133 @@ body {
    border: none;
    margin-top: 5px;
    margin-left: 17px;
+   text-shadow: 4px 4px 5px rgb(165, 165, 165);
 }
 
 #available-items h3 {
    text-align: center;
+   text-shadow: 4px 4px 5px rgb(165, 165, 165);
 }
 
 /* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
 .flip-card {
-   background-color: transparent;
-   margin: auto;
-   /* width: 350px; */
-   width: 400px;
-   /* height: 290px; */
-   height: 300px;
-   border: 1px solid #f1f1f1;
-   perspective: 1000px; /* Remove this if you don't want the 3D effect */
- }
+  background-color: transparent;
+  margin: auto;
+  width: 400px;
+  height: 300px;
+  perspective: 1000px; /* Remove this if you don't want the 3D effect */
+}
  
  /* This container is needed to position the front and back side */
- .flip-card-inner {
-   position: relative;
-   width: 100%;
-   height: 100%;
-   text-align: center;
-   transition: transform 0.8s;
-   transform-style: preserve-3d;
- }
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
  
  /* Do an horizontal flip when you move the mouse over the flip box container */
- .flip-card:hover .flip-card-inner {
-   transform: rotateY(180deg);
- }
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+  border-radius: 25px;
+}
  
  /* Position the front and back side */
- .flip-card-front, .flip-card-back {
-   position: absolute;
-   width: 100%;
-   height: 100%;
-   -webkit-backface-visibility: hidden; /* Safari */
-   backface-visibility: hidden;
- }
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden; /* Safari */
+  backface-visibility: hidden;
+  border-radius: 25px;
+  box-shadow: 10px 5px 5px rgb(87, 14, 102);
+}
  
  /* Style the front side (fallback if image is missing) */
- .flip-card-front {
-   background-color: #2191ece7;
-   color: white;
- }
+.flip-card-front {
+  background-color: #2191ece7;
+  color: white;
+}
 
  /* .flip-card-front img {
    object-fit: contain;
  }  */
  
  /* Style the back side */
- .flip-card-back {
-   background-color: #2191ece7;
-   color: white;
-   transform: rotateY(180deg);
- }
+.flip-card-back {
+  background-color: #2191ece7;
+  color: white;
+  transform: rotateY(180deg);
+}
 
- #character-form {
-   display: none;
-   float: right;
-   padding: 20px;
-   border-radius: 5px;
- }
+#character-form {
+  display: none;
+  float: right;
+  padding: 20px;
+  border-radius: 5px;
+}
 
- #item-form {
-   display: none;
-   float: right;
-   padding: 20px;
-   border-radius: 5px;
- }
+#item-form {
+  display: none;
+  float: right;
+  padding: 20px;
+  border-radius: 5px;
+}
 
- .padding {
-    padding-left: 10px;
- }
+.padding {
+   padding-left: 10px;
+}
 
- .close {
-   right: 32px;
-   top: 32px;
-   width: 32px;
-   height: 32px;
-   opacity: 0.1;
-   border: none;
- }
+.close {
+  right: 32px;
+  top: 32px;
+  width: 32px;
+  height: 32px;
+  opacity: 0.1;
+  border: none;
+}
 
- .close:hover {
-   opacity: 1;
- }
+.close:hover {
+  opacity: 1;
+}
 
- .close:before, .close:after {
-   left: 15px;
-   height: 33px;
-   width: 2px;
-   background-color: #3d5a3f;
-   border: 0px dashed rgba(0, 0, 0, 0);
- }
+.close:before, .close:after {
+  left: 15px;
+  height: 33px;
+  width: 2px;
+  background-color: #3d5a3f;
+  border: 0px dashed rgba(0, 0, 0, 0);
+}
 
- .close:before {
-   transform: rotate(45deg);
- }
+.close:before {
+  transform: rotate(45deg);
+}
 
- .close:after {
-   transform: rotate(-45deg);
- }
+.close:after {
+  transform: rotate(-45deg);
+}
 
- #inventory-list {
-   list-style: none;
- }
+#inventory-list {
+  list-style: none;
+}
  
- .inventory-items{
-   display: inline-block;
-   padding: 10px;
- }
+.inventory-items{
+  display: inline-block;
+  padding: 10px;
+}
 
 #create-character {
    border-radius: 5px;
    padding: 5px;
+   text-shadow: 1px 1px rgb(165, 165, 165);
 }
 
 #create-item {
    border-radius: 5px;
    padding: 5px;
+   text-shadow: 1px 1px rgb(165, 165, 165);
 }
 
 #create-character:hover {
@@ -227,4 +233,8 @@ body {
  #create-item:hover {
    background-color: rgba(0, 0, 0, 0.705);
    color: white;
+ }
+
+ img {
+   border-radius: 25px;
  }
