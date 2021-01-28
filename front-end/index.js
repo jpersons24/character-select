@@ -178,7 +178,7 @@ function createCharacter(event){
     .then(res => res.json())
     .then(char => {
         characterDiv.innerHTML += 
-            `<p data-id="${char.id}">${char.name}</p>`
+            `<p class='padding' data-id="${char.id}">${char.name}</p>`
     })
     event.target.reset()
     charForm.style.display = "none"
@@ -306,7 +306,7 @@ function renderCharacter(char) {
         <div class="flip-card">
             <div class="flip-card-inner">
                 <div class="flip-card-front">
-                    <img class="flip-card-image" src="${char.image_url}" alt="${char.name}" style="width:450px;height:300px;">
+                    <img class="flip-card-image" src="${char.image_url}" alt="${char.name}" style="width:400px;height:300px;">
                 </div>
                 <div class="flip-card-back">
                     <p>Health: ${char.hp}</p>
