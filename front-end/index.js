@@ -226,7 +226,7 @@ function handleCharDelete(event) {
 function handleItemDelete(event) {
     const selectItem = document.querySelector(`#available-items p[data-id="${itemId}`)
     selectItem.remove()
-    characterDisplay.innerHTML = '<h3>Character Name</h3>'
+    characterDisplay.innerHTML = '<h3></h3>'
     deleteItem(itemId)
 }
 
